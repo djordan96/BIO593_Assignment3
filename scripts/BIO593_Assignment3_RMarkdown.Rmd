@@ -15,8 +15,9 @@ This document uses data with life-history, population, and ecological examples. 
 
 ## Loading Data and Installing packages
 ```{r load data, echo=TRUE, cache=FALSE, results=FALSE, message=FALSE, warning=FALSE}
-#download.file("https://ndownloader.figshare.com/files/2292169" , "data/portal_data_joined.csv") 
+#download.file("https://ndownloader.figshare.com/files/2292169" , "BIO593_Assignment3/data/portal_data_joined.csv") 
 #download.file("https://ndownloader.figshare.com/files/2292171" , "data/portal_data.sqlite", mode = "wb")
+#surveys <- read.csv("BIO593_Assignment3/data/portal_data_joined.csv") #uploading csv
 ```
 
 ```{r install packages, echo=TRUE, results=FALSE, message=FALSE, warning=FALSE}

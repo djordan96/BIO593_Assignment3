@@ -130,8 +130,9 @@ $(document).ready(function () {
 </div>
 <div id="loading-data-and-installing-packages" class="section level2">
 <h2>Loading Data and Installing packages</h2>
-<pre class="r"><code>#download.file(&quot;https://ndownloader.figshare.com/files/2292169&quot; , &quot;data/portal_data_joined.csv&quot;) 
-#download.file(&quot;https://ndownloader.figshare.com/files/2292171&quot; , &quot;data/portal_data.sqlite&quot;, mode = &quot;wb&quot;)</code></pre>
+<pre class="r"><code>#download.file(&quot;https://ndownloader.figshare.com/files/2292169&quot; , &quot;BIO593_Assignment3/data/portal_data_joined.csv&quot;) 
+#download.file(&quot;https://ndownloader.figshare.com/files/2292171&quot; , &quot;data/portal_data.sqlite&quot;, mode = &quot;wb&quot;)
+#surveys &lt;- read.csv(&quot;BIO593_Assignment3/data/portal_data_joined.csv&quot;) #uploading csv</code></pre>
 <pre class="r"><code>#install.packages(c(&quot;dbplyr&quot;,&quot;RSQLite&quot;,&quot;tidyverse&quot;))
 library(dbplyr)
 library(RSQLite)
