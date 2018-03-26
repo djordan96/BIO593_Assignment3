@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction of the data
 
-This document uses data with life-history, population, and ecological examples. This data can be cited here: http://dx.doi.org/10.6084/m9.figshare.1314459. We will provide an indepth analysis containing plots that visually represent trends in the data and statistical analyses to accurately describe the trends. 
+This document uses data with life-history, population, and ecological examples. This data can be cited here: http://dx.doi.org/10.6084/m9.figshare.1314459. We will provide an indepth analysis containing plots that visually represent trends in the data and statistical analyses to accurately describe the trends. We will outline 3 major questions with this dataset.
 
 ## Loading Data and Installing packages
 ```{r load data, echo=TRUE, cache=FALSE, results=FALSE, message=FALSE, warning=FALSE}
@@ -27,3 +27,21 @@ library(RSQLite)
 library(tidyverse)
 ```
 
+## Question 1
+Does plot type affect the relationship between hindfoot length and sex of rodent species? 
+
+``` {r Q1, echo = FALSE}
+
+```
+
+## Question 2
+Does plot type affect the relationship between weight and sex of rodent species? 
+```{r Q2, echo = FALSE}
+
+```
+
+## Question 3
+How does rodent species abundance change over time in each plot type? 
+```{r Q3, echo = FALSE}
+
+```
