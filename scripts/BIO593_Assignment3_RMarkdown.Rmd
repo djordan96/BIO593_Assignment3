@@ -13,18 +13,21 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This document uses data with life-history, population, and ecological examples. This data can be cited here: http://dx.doi.org/10.6084/m9.figshare.1314459. We will provide an indepth analysis containing plots that visually represent trends in the data and statistical analyses to accurately describe the trends. We will outline 3 major questions with this dataset.
 
-## Loading Data and Installing packages
-```{r load data, echo=TRUE, cache=FALSE, results=FALSE, message=FALSE, warning=FALSE}
-#download.file("https://ndownloader.figshare.com/files/2292169" , "BIO593_Assignment3/data/portal_data_joined.csv") 
-#download.file("https://ndownloader.figshare.com/files/2292171" , "data/portal_data.sqlite", mode = "wb")
-#surveys <- read.csv("BIO593_Assignment3/data/portal_data_joined.csv") #uploading csv
-```
+## Introduction of the problem
 
-```{r install packages, echo=TRUE, results=FALSE, message=FALSE, warning=FALSE}
+Our analyses investigate how differential plot types can influences rodent species weight, sex ratios, hindfoot length, and abundances. The following markdown will couple illustrative figures with statistical analyses to determine if plot types affect rodent species. 
+
+```{r installpackages, echo=TRUE, results=FALSE, message=FALSE, warning=FALSE}
 #install.packages(c("dbplyr","RSQLite","tidyverse"))
 library(dbplyr)
 library(RSQLite)
 library(tidyverse)
+```
+
+## Loading Data and Installing packages
+```{r loaddata, echo=TRUE, cache=FALSE, results=FALSE, message=FALSE, warning=FALSE}
+download.file("https://ndownloader.figshare.com/files/2292169" , "data/portal_data_joined.csv") 
+surveys <- read.csv("../data/portal_data_joined.csv", header=TRUE) #uploading csv
 ```
 
 ## Question 1
@@ -41,7 +44,26 @@ Does plot type affect the relationship between weight and sex of rodent species?
 ```
 
 ## Question 3
-How does rodent species abundance change over time in each plot type? 
+How does rodent species abundance change in each plot type? 
 ```{r Q3, echo = FALSE}
+surveys_specplot<- surveys %>% 
+  select(taxa, plot_type, species) %>%
+  filter(taxa == "Rodent") %>% 
+  filter(!is.na(taxa), !is.na(plot_type), !is.na(species)) %>%
+  group_by(plot_type, species) %>%
+  tally()
+
+ggplot(data = surveys_specplot, aes(x = factor(-n), y = n, fill = species)) +
+  geom_bar(stat="identity") +
+  ylab("Counts") + xlab("Species") + 
+  guides(fill = guide_legend(ncol = 3)) +
+  facet_wrap(~ plot_type, scales = "free_x", drop = TRUE) +
+  scale_fill_discrete(name="Species") +
+  theme_bw(base_size=7) + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                     panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()) +
+  theme(legend.position=c(0.85,0.25)) 
 
 ```
