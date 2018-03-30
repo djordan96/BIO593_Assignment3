@@ -1,5 +1,5 @@
 ---
-title: "BIO593_Assignment3"
+title: "BIO593 Assignment 3"
 author: "Kevin Wong, Danielle Jordan, Roxy Roja"
 date: '2018-03-26'
 output: html_document
@@ -27,7 +27,7 @@ library(tidyverse)
 ## Loading Data and Installing packages
 ```{r loaddata, echo=TRUE, cache=FALSE, results=FALSE, message=FALSE, warning=FALSE}
 download.file("https://ndownloader.figshare.com/files/2292169" , "data/portal_data_joined.csv") 
-surveys <- read.csv("../data/portal_data_joined.csv", header=TRUE) #uploading csv
+surveys <- read.csv("../data/portal_data_joined.csv", header=TRUE, na.strings = c("","NA")) #uploading csv
 ```
 
 ## Question 1
@@ -45,7 +45,7 @@ Does plot type affect the relationship between weight and sex of rodent species?
 
 ## Question 3
 How does rodent species abundance change in each plot type? 
-```{r Q3, echo = FALSE}
+```{r Q3, echo = FALSE, results = TRUE}
 surveys_specplot<- surveys %>% 
   select(taxa, plot_type, species) %>%
   filter(taxa == "Rodent") %>% 

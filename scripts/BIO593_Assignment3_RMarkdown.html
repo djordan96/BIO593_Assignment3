@@ -139,7 +139,7 @@ library(tidyverse)</code></pre>
 <div id="loading-data-and-installing-packages" class="section level2">
 <h2>Loading Data and Installing packages</h2>
 <pre class="r"><code>download.file(&quot;https://ndownloader.figshare.com/files/2292169&quot; , &quot;data/portal_data_joined.csv&quot;) 
-surveys &lt;- read.csv(&quot;../data/portal_data_joined.csv&quot;, header=TRUE) #uploading csv</code></pre>
+surveys &lt;- read.csv(&quot;../data/portal_data_joined.csv&quot;, header=TRUE, na.strings = c(&quot;&quot;,&quot;NA&quot;)) #uploading csv</code></pre>
 </div>
 <div id="question-1" class="section level2">
 <h2>Question 1</h2>
