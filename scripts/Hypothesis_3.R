@@ -38,8 +38,19 @@ ggplot(data = surveys_specplot, aes(x = factor(-n), y = n, fill = species)) +
 #homogenity of variance
 
 #2 way ANOVA 
-anova(lm(data = surveys_specplot, n ~ plot_type * species))
+anova(lm(n ~ plot_type * species, surveys_specplot))
 
+tbl = table(surveys$plot_type, surveys$species)
+tbl
+
+chisqsp <- chisq.test(tbl)
+install.packages("devtools")
+devtools::install_github("taiyun/corrplot", build_vignettes = TRUE)
+install.packages("corrplot")
+library(corrplot )
+
+round(chisqsp$residuals, 3)
+corrplot(chisqsp$residuals, is.corr=FALSE)
 
 # Total number of rodents in each plot over time
 surveys_timeplot<- surveys %>% 
@@ -49,11 +60,11 @@ surveys_timeplot<- surveys %>%
   group_by(plot_type, year) %>%
   tally()
 
-ggplot(surveys_timeplot,aes(x=year, y=n, colour=plot_type))+
-  ylab("Total number or rodents")+ xlab("Year") +
+ggplot(surveys_timeplot,aes(x=year, y=n, color = plot_type))+
+  ylab("Total number of rodents")+ xlab("Year") + labs(color ="Plot Type") +
   geom_point()+
   geom_line(aes(group=plot_type))+
-  scale_fill_discrete(name="Plot Type") +
+  ylim(0,1200) +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                      panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))

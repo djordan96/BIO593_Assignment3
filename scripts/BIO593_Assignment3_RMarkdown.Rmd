@@ -7,6 +7,7 @@ output: rmarkdown::github_document
 
 ```{r Intro, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+chooseCRANmirror(graphics=FALSE, ind=1)
 ```
 
 ## Introduction of the data
@@ -42,9 +43,9 @@ Does plot type affect the relationship between weight and sex of rodent species?
 
 ```
 
-## Question 3
+## Question 3a (Plot)
 How does rodent species abundance change in each plot type? 
-```{r Q3, echo = FALSE, results = TRUE}
+```{r Q3a, echo = FALSE, results = TRUE}
 surveys_specplot<- surveys %>% 
   select(taxa, plot_type, species) %>%
   filter(taxa == "Rodent") %>% 
@@ -67,6 +68,23 @@ ggplot(data = surveys_specplot, aes(x = factor(-n), y = n, fill = species)) +
 
 ```
 
+## Question 3b (Statistics)
+A Pearsons Chi-squared test was used to determine relationship between rodent species abundance and plot type. The residuals are plotted from the Chi-squared analysis to determine postivie and negative associations. Blue means positive association and red means negative association.
+```{r Q3b, echo = FALSE, warning=FALSE, message=FALSE, results = TRUE}
+
+tbl = table(surveys$plot_type, surveys$species)
+
+chisqsp <- chisq.test(tbl)
+install.packages("devtools")
+devtools::install_github("taiyun/corrplot", build_vignettes = TRUE)
+install.packages("corrplot")
+library(corrplot )
+
+chisqsp
+
+round(chisqsp$residuals, 3)
+corrplot(chisqsp$residuals, is.corr=FALSE)
+```
 
 ## Question 4
 How does the total number of rodents change in each plot type over time?
@@ -79,7 +97,7 @@ surveys_timeplot<- surveys %>%
   tally()
 
 ggplot(surveys_timeplot,aes(x=year, y=n, color = plot_type))+
-  ylab("Total number or rodents")+ xlab("Year") + labs(color ="Plot Type") +
+  ylab("Total number of rodents")+ xlab("Year") + labs(color ="Plot Type") +
   geom_point()+
   geom_line(aes(group=plot_type))+
   ylim(0,1200) +
