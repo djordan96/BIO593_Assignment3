@@ -11,21 +11,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction of the data
 
-This document uses data with life-history, population, and ecological examples. This data can be cited here: http://dx.doi.org/10.6084/m9.figshare.1314459. We will provide an indepth analysis containing plots that visually represent trends in the data and statistical analyses to accurately describe the trends. We will outline 3 major questions with this dataset.
+This document uses data with life-history, population, and ecological examples. This data can be cited here: http://dx.doi.org/10.6084/m9.figshare.1314459. We will provide an indepth analysis containing plots that visually represent trends in the data and statistical analyses to accurately describe the trends. We will outline the major questions with this dataset.
 
 ## Introduction of the problem
 
 Our analyses investigate how differential plot types can influences rodent species weight, sex ratios, hindfoot length, and abundances. The following markdown will couple illustrative figures with statistical analyses to determine if plot types affect rodent species. 
 
-```{r installpackages, echo=TRUE, results=FALSE, message=FALSE, warning=FALSE}
+```{r installpackages, echo=FALSE, results=FALSE, message=FALSE, warning=FALSE}
 #install.packages(c("dbplyr","RSQLite","tidyverse"))
 library(dbplyr)
 library(RSQLite)
 library(tidyverse)
 ```
 
-## Loading Data and Installing packages
-```{r loaddata, echo=TRUE, cache=FALSE, results=FALSE, message=FALSE, warning=FALSE}
+```{r loaddata, echo=FALSE, cache=FALSE, results=FALSE, message=FALSE, warning=FALSE}
 download.file("https://ndownloader.figshare.com/files/2292169" , "data/portal_data_joined.csv") 
 surveys <- read.csv("../data/portal_data_joined.csv", header=TRUE, na.strings = c("","NA")) #uploading csv
 ```
@@ -66,4 +65,25 @@ ggplot(data = surveys_specplot, aes(x = factor(-n), y = n, fill = species)) +
     axis.ticks.x = element_blank()) +
   theme(legend.position=c(0.85,0.25)) 
 
+```
+
+
+## Question 4
+How does the total number of rodents change in each plot type over time?
+```{r Q4, echo = FALSE, results = TRUE}
+surveys_timeplot<- surveys %>% 
+  select(taxa, plot_type, species, year) %>%
+  filter(taxa == "Rodent") %>% 
+  filter(!is.na(taxa), !is.na(plot_type), !is.na(species)) %>%
+  group_by(plot_type, year) %>%
+  tally()
+
+ggplot(surveys_timeplot,aes(x=year, y=n, color = plot_type))+
+  ylab("Total number or rodents")+ xlab("Year") + labs(color ="Plot Type") +
+  geom_point()+
+  geom_line(aes(group=plot_type))+
+  ylim(0,1200) +
+  theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                     panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
