@@ -2,7 +2,7 @@
 title: "BIO593 Assignment 3"
 author: "Kevin Wong, Danielle Jordan, Roxy Roja"
 date: '2018-03-26'
-output: html_document
+output: rmarkdown::github_document
 ---
 
 ```{r Intro, include=FALSE}
