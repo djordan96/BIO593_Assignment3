@@ -52,51 +52,58 @@ What is the relationship between hindfoot length and species??
 hindspecies <- surveys %>% 
   select(taxa, species_id, hindfoot_length) %>% 
   filter(!is.na(hindfoot_length)) %>% 
-  filter(!is.na(species_id)) %>% 
-  group_by(taxa,species_id, hindfoot_length)
+  filter(!is.na(species_id))
 
 species_hind <- hindspecies %>% 
-  summarize(avg_hind=mean(hindfoot_length), sem=sd(hindfoot_length)/sqrt(length(hindfoot_length))) %>% 
-  filter(!is.na(sem))
+  group_by(species_id) %>% 
+  summarize(avg_hind=mean(hindfoot_length), sem=sd(hindfoot_length)/sqrt(length(hindfoot_length))) 
 
 ggplot(data=species_hind, aes(x=species_id, y=avg_hind))+
   geom_bar(stat="identity",
-  position = position_dodge(width = 0.9)) +
+           position = position_dodge(width = 0.9)) +
   ylab("Average Hindfoot Length (cm)") + xlab("Species ID")+
-  geom_errorbar(aes(ymin=avg_hind+sem, ymax=avg_hind-sem),
-                width=0.5,
-                size=0.25)
+  geom_errorbar(aes(ymin=avg_hind+sem, ymax=avg_hind-sem),position=position_dodge(0.75))
 ```
 ## Question 2b
 What is the relationship between hindfoot length and weight? 
 ```{r 2b, echo = FALSE}
+#Hindfoot Length v Weight				
+weighthind <- surveys %>% 
+  select(taxa, species_id, hindfoot_length, weight) %>% 
+  filter(!is.na(hindfoot_length)) %>% 
+  filter(!is.na(weight))
+
 whind <- weighthind %>% 
   group_by(taxa, species_id, hindfoot_length) %>% 
   summarize(avg_weight=mean(weight), sem=sd(weight)/sqrt(length(weight))) %>% 
   filter(!is.na(sem))
 
 ggplot(data=whind, aes(x=hindfoot_length, y=avg_weight)) +
-  geom_bar(stat = "identity",
-           position = position_dodge(width = 1.5)) +
-  ylab("Mean Weight (g)") + xlab("Hindfoot Length (cm)")+
-  geom_errorbar(aes(ymin=avg_weight+sem, ymax=avg_weight-sem),
-                width=0.5,
-                size=0.25)
+  geom_point(stat = "identity",
+           position = "identity") +
+  theme_minimal()+
+     ylab("Mean Weight (g)") + xlab("Hindfoot Length (cm)")+
+  geom_errorbar(aes(ymin=avg_weight+sem, ymax=avg_weight-sem))
 ```
 
 ## Question 2c
 Does plot type affect the relationship between weight and sex of rodent species? 
 ```{r Q2c, echo = FALSE}
+hypothesis1 <- surveys %>% 
+  select(taxa, sex, weight, plot_type) %>%
+  filter(!is.na(weight)) %>% 
+  filter(!is.na(sex))
+
 hyp1 <- hypothesis1 %>% 
   group_by(taxa, sex, plot_type) %>% 
   summarize(avg_weight=mean(weight), sem=sd(weight)/sqrt(length(weight)))
 
-ggplot(data=hyp1, aes(x=plot_type, y=avg_weight)) +
+ggplot(data=hyp1, aes(x=plot_type, y=avg_weight, fill=sex))+
   geom_bar(stat = "identity",aes(fill = sex),
-  position = position_dodge(width = 0.9)) +
+           position = position_dodge(width = 0.9)) +
   ylab("Mean Weight (g)") + xlab("Plot Type")+
-  geom_errorbar(aes(ymin=avg_weight+sem, ymax=avg_weight-sem),
-                width=0.5,
+  geom_errorbar(aes(ymin=avg_weight+sem, ymax=avg_weight-sem), position=position_dodge(0.9),
+                width=0.2,
                 size=0.25)
 ```
 
