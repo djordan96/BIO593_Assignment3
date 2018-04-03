@@ -13,33 +13,35 @@ Introduction of the problem
 
 Our analyses investigate how differential plot types can influences rodent species weight, sex ratios, hindfoot length, and abundances. The following markdown will couple illustrative figures with statistical analyses to determine if plot types affect rodent species.
 
-Question 1
-----------
+Question 1 (Danielle)
+---------------------
 
 Does plot type affect the relationship between hindfoot length and sex of rodent species?
 
-Question 2
-----------
+![](BIO593_Assignment3_RMarkdown_files/figure-markdown_github-ascii_identifiers/Q1-1.png)
+
+Question 2 (Roxy)
+-----------------
 
 Does plot type affect the relationship between weight and sex of rodent species?
 
-Question 3a (Plot)
-------------------
+Question 3a (Plot)(Kevin)
+-------------------------
 
 How does rodent species abundance change in each plot type? ![](BIO593_Assignment3_RMarkdown_files/figure-markdown_github-ascii_identifiers/Q3a-1.png)
 
-Question 3b (Statistics)
-------------------------
+Question 3b (Statistics) (Kevin)
+--------------------------------
 
 A Pearsons Chi-squared test was used to determine relationship between rodent species abundance and plot type. The residuals are plotted from the Chi-squared analysis to determine postivie and negative associations. Blue means positive association and red means negative association.
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/cg/539pdzbj11g5mqx9hyc31qr80000gn/T//RtmpdGZbtk/downloaded_packages
+    ##  /var/folders/cg/539pdzbj11g5mqx9hyc31qr80000gn/T//RtmpjoWJQG/downloaded_packages
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/cg/539pdzbj11g5mqx9hyc31qr80000gn/T//RtmpdGZbtk/downloaded_packages
+    ##  /var/folders/cg/539pdzbj11g5mqx9hyc31qr80000gn/T//RtmpjoWJQG/downloaded_packages
 
     ## 
     ##  Pearson's Chi-squared test
@@ -120,7 +122,17 @@ A Pearsons Chi-squared test was used to determine relationship between rodent sp
 
 ![](BIO593_Assignment3_RMarkdown_files/figure-markdown_github-ascii_identifiers/Q3b-1.png)
 
-Question 4
-----------
+Question 4 (Kevin)
+------------------
 
 How does the total number of rodents change in each plot type over time? ![](BIO593_Assignment3_RMarkdown_files/figure-markdown_github-ascii_identifiers/Q4-1.png)
+
+Question 5 (Danielle)
+---------------------
+
+How does hindfoot length change with weight? ![](BIO593_Assignment3_RMarkdown_files/figure-markdown_github-ascii_identifiers/Q5-1.png)
+
+Question 6 (Danielle)
+---------------------
+
+How does hindfoot length change with species ID? ![](BIO593_Assignment3_RMarkdown_files/figure-markdown_github-ascii_identifiers/Q6-1.png)
