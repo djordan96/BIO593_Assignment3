@@ -68,3 +68,13 @@ ggplot(surveys_timeplot,aes(x=year, y=n, color = plot_type))+
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                      panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+tbl2 = table(surveys$plot_type, surveys$year)
+tbl2
+
+
+
+
+chisqsp2 <- chisq.test(tbl2)
+round(chisqsp2$residuals, 3)
+corrplot(chisqsp2$residuals, is.corr=FALSE)
