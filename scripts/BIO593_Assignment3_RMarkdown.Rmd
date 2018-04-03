@@ -62,24 +62,24 @@ Does plot type affect the relationship between weight and sex of rodent species?
 How does rodent species abundance change in each plot type? 
 ```{r Q3a, echo = FALSE, results = TRUE}
 surveys_specplot<- surveys %>% 
-  select(taxa, plot_type, species) %>%
-  filter(taxa == "Rodent") %>% 
-  filter(!is.na(taxa), !is.na(plot_type), !is.na(species)) %>%
-  group_by(plot_type, species) %>%
-  tally()
+  select(taxa, plot_type, species) %>% #selecting variables
+  filter(taxa == "Rodent") %>% #filtering rodents
+  filter(!is.na(taxa), !is.na(plot_type), !is.na(species)) %>% #removing na
+  group_by(plot_type, species) %>% #grouping by plot and species
+  tally() #getting a count
 
-ggplot(data = surveys_specplot, aes(x = factor(-n), y = n, fill = species)) +
+ggplot(data = surveys_specplot, aes(x = factor(-n), y = n, fill = species)) + #factor allows to re-arrange columns from greatest to smallest
   geom_bar(stat="identity") +
   ylab("Counts") + xlab("Species") + 
-  guides(fill = guide_legend(ncol = 3)) +
-  facet_wrap(~ plot_type, scales = "free_x", drop = TRUE) +
-  scale_fill_discrete(name="Species") +
-  theme_bw(base_size=7) + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+  guides(fill = guide_legend(ncol = 3)) + #columns in legend
+  facet_wrap(~ plot_type, scales = "free_x", drop = TRUE) + #facet wrap and removing xaxis
+  scale_fill_discrete(name="Species") + #labelling legend
+  theme_bw(base_size=7) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), #altering legend size and removing grid
                      panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) +
   theme(
     axis.text.x = element_blank(),
     axis.ticks.x = element_blank()) +
-  theme(legend.position=c(0.85,0.25)) 
+  theme(legend.position=c(0.85,0.25)) #altering legend position
 
 ```
 
@@ -87,23 +87,60 @@ ggplot(data = surveys_specplot, aes(x = factor(-n), y = n, fill = species)) +
 A Pearsons Chi-squared test was used to determine relationship between rodent species abundance and plot type. The residuals are plotted from the Chi-squared analysis to determine postivie and negative associations. Blue means positive association and red means negative association.
 ```{r Q3b, echo = FALSE, warning=FALSE, message=FALSE, results = TRUE}
 
-tbl = table(surveys$plot_type, surveys$species)
+tbl = table(surveys$plot_type, surveys$species) #creating a table
 
-chisqsp <- chisq.test(tbl)
+chisqsp <- chisq.test(tbl) #Chisqu test
 install.packages("devtools")
-devtools::install_github("taiyun/corrplot", build_vignettes = TRUE)
+devtools::install_github("taiyun/corrplot", build_vignettes = TRUE) #downloading corr plot from github
 install.packages("corrplot")
 library(corrplot )
 
 chisqsp
 
-round(chisqsp$residuals, 3)
-corrplot(chisqsp$residuals, is.corr=FALSE)
+round(chisqsp$residuals, 3) #getting a table of residulas
+corrplot(chisqsp$residuals, is.corr=FALSE) #bubble plot of residulas
 ```
 
-## Question 4 (Kevin)
+## Question 4 (Plot)(Kevin)
+How does genus abundance differ between plot types?
+```{r Q4, echo = FALSE, results=TRUE, warning = FALSE}
+surveys_genplot<- surveys %>% 
+  select(taxa, plot_type, genus) %>% #selecting variables
+  filter(taxa == "Rodent") %>% #Filtering rodent
+  filter(!is.na(taxa), !is.na(plot_type), !is.na(genus)) %>% #removing NAs
+  group_by(plot_type, genus) %>% #grouping
+  tally() #counts
+
+ggplot(data = surveys_genplot, aes(x = factor(-n), y = n, fill = genus)) + #factor allows to re-arrange columsn from greatest to smallest
+  geom_bar(stat="identity") +
+  ylab("Counts") + xlab("Genus") + 
+  guides(fill = guide_legend(ncol = 2)) + #number of columns in legend
+  facet_wrap(~ plot_type, scales = "free_x", drop = TRUE) +
+  scale_fill_discrete(name="Genus") +
+  theme_bw(base_size=8) + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                     panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()) +
+  theme(legend.position=c(0.85,0.25)) 
+```
+
+## Question 4b (Statistics)(Kevin)
+A Pearsons Chi-squared test was used to determine relationship between rodent genus abundance and plot type. The residuals are plotted from the Chi-squared analysis to determine postivie and negative associations. Blue means positive association and red means negative association.
+
+```{r Q4b, echo = FALSE, results=TRUE, warning=FALSE}
+tbl2 = table(surveys$plot_type, surveys$genus)
+tbl2
+
+chisqsp2 <- chisq.test(tbl2)
+
+round(chisqsp2$residuals, 3)
+corrplot(chisqsp2$residuals, is.corr=FALSE)
+```
+
+## Question 5 (Plot)(Kevin)
 How does the total number of rodents change in each plot type over time?
-```{r Q4, echo = FALSE, results = TRUE}
+```{r Q5, echo = FALSE, results = TRUE}
 surveys_timeplot<- surveys %>% 
   select(taxa, plot_type, species, year) %>%
   filter(taxa == "Rodent") %>% 
@@ -115,15 +152,15 @@ ggplot(surveys_timeplot,aes(x=year, y=n, color = plot_type))+
   ylab("Total number of rodents")+ xlab("Year") + labs(color ="Plot Type") +
   geom_point()+
   geom_line(aes(group=plot_type))+
-  ylim(0,1200) +
+  ylim(0,1200) + #setting yaxis limits
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                      panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-## Question 4b (Statistics)(Kevin)
+## Question 5b (Statistics)(Kevin)
 Using a Generalized Lease Square model to determine the effects of plot type over year.
-```{r Q4b, echo = FALSE, results=TRUE, warning = FALSE}
+```{r Q5b, echo = FALSE, results=TRUE, warning = FALSE}
 install.packages("nlme")
 library(nlme)
 
@@ -132,9 +169,9 @@ plot(glstime)
 summary(glstime)
 ```
 
-## Question 5 (Danielle)
+## Question 6 (Danielle)
 How does hindfoot length change with weight?
-```{r Q5, echo = FALSE}
+```{r Q6, echo = FALSE}
 weighthind <- surveys %>% 
   select(taxa, species_id, hindfoot_length, weight) %>% 
   filter(!is.na(hindfoot_length)) %>% 
@@ -155,10 +192,10 @@ ggplot(data=whind, aes(x=hindfoot_length, y=avg_weight)) +
 
 ```
 
-## Question 6 (Danielle)
+## Question 7 (Danielle)
 
 How does hindfoot length change with species ID?
-```{r Q6, echo = FALSE}
+```{r Q7, echo = FALSE}
 hindspecies <- surveys %>% 
   select(taxa, species_id, hindfoot_length) %>% 
   filter(!is.na(hindfoot_length)) %>% 
