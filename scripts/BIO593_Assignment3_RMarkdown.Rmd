@@ -121,6 +121,17 @@ ggplot(surveys_timeplot,aes(x=year, y=n, color = plot_type))+
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
+## Question 4b (Statistics)(Kevin)
+Using a Generalized Lease Square model to determine the effects of plot type over year.
+```{r Q4b, echo = FALSE, results=TRUE, warning = FALSE}
+install.packages("nlme")
+library(nlme)
+
+glstime <- gls(n ~ year*plot_type, data = surveys_timeplot)
+plot(glstime)
+summary(glstime)
+```
+
 ## Question 5 (Danielle)
 How does hindfoot length change with weight?
 ```{r Q5, echo = FALSE}

@@ -37,11 +37,11 @@ A Pearsons Chi-squared test was used to determine relationship between rodent sp
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/cg/539pdzbj11g5mqx9hyc31qr80000gn/T//RtmpjoWJQG/downloaded_packages
+    ##  /var/folders/cg/539pdzbj11g5mqx9hyc31qr80000gn/T//RtmpaKcdNW/downloaded_packages
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/cg/539pdzbj11g5mqx9hyc31qr80000gn/T//RtmpjoWJQG/downloaded_packages
+    ##  /var/folders/cg/539pdzbj11g5mqx9hyc31qr80000gn/T//RtmpaKcdNW/downloaded_packages
 
     ## 
     ##  Pearson's Chi-squared test
@@ -126,6 +126,83 @@ Question 4 (Kevin)
 ------------------
 
 How does the total number of rodents change in each plot type over time? ![](BIO593_Assignment3_RMarkdown_files/figure-markdown_github-ascii_identifiers/Q4-1.png)
+
+Question 4b (Statistics)(Kevin)
+-------------------------------
+
+Using a Generalized Lease Square model to determine the effects of plot type over year.
+
+    ## 
+    ## The downloaded binary packages are in
+    ##  /var/folders/cg/539pdzbj11g5mqx9hyc31qr80000gn/T//RtmpaKcdNW/downloaded_packages
+
+    ## 
+    ## Attaching package: 'nlme'
+
+    ## The following object is masked from 'package:dplyr':
+    ## 
+    ##     collapse
+
+![](BIO593_Assignment3_RMarkdown_files/figure-markdown_github-ascii_identifiers/Q4b-1.png)
+
+    ## Generalized least squares fit by REML
+    ##   Model: n ~ year * plot_type 
+    ##   Data: surveys_timeplot 
+    ##        AIC      BIC    logLik
+    ##   1533.586 1564.249 -755.7932
+    ## 
+    ## Coefficients:
+    ##                                              Value Std.Error   t-value
+    ## (Intercept)                             -22771.746  5493.517 -4.145203
+    ## year                                        11.745     2.761  4.253515
+    ## plot_typeLong-term Krat Exclosure         3783.746  7769.006  0.487031
+    ## plot_typeRodent Exclosure                26340.791  7769.006  3.390497
+    ## plot_typeShort-term Krat Exclosure       17491.728  7769.006  2.251476
+    ## plot_typeSpectab exclosure               18827.451  7769.006  2.423405
+    ## year:plot_typeLong-term Krat Exclosure      -2.104     3.905 -0.538695
+    ## year:plot_typeRodent Exclosure             -13.460     3.905 -3.446840
+    ## year:plot_typeShort-term Krat Exclosure     -8.979     3.905 -2.299498
+    ## year:plot_typeSpectab exclosure             -9.687     3.905 -2.480727
+    ##                                         p-value
+    ## (Intercept)                              0.0001
+    ## year                                     0.0000
+    ## plot_typeLong-term Krat Exclosure        0.6271
+    ## plot_typeRodent Exclosure                0.0009
+    ## plot_typeShort-term Krat Exclosure       0.0262
+    ## plot_typeSpectab exclosure               0.0169
+    ## year:plot_typeLong-term Krat Exclosure   0.5911
+    ## year:plot_typeRodent Exclosure           0.0008
+    ## year:plot_typeShort-term Krat Exclosure  0.0232
+    ## year:plot_typeSpectab exclosure          0.0145
+    ## 
+    ##  Correlation: 
+    ##                                         (Intr) year   p_L-KE plt_RE p_S-KE
+    ## year                                    -1.000                            
+    ## plot_typeLong-term Krat Exclosure       -0.707  0.707                     
+    ## plot_typeRodent Exclosure               -0.707  0.707  0.500              
+    ## plot_typeShort-term Krat Exclosure      -0.707  0.707  0.500  0.500       
+    ## plot_typeSpectab exclosure              -0.707  0.707  0.500  0.500  0.500
+    ## year:plot_typeLong-term Krat Exclosure   0.707 -0.707 -1.000 -0.500 -0.500
+    ## year:plot_typeRodent Exclosure           0.707 -0.707 -0.500 -1.000 -0.500
+    ## year:plot_typeShort-term Krat Exclosure  0.707 -0.707 -0.500 -0.500 -1.000
+    ## year:plot_typeSpectab exclosure          0.707 -0.707 -0.500 -0.500 -0.500
+    ##                                         plt_Se y:_LKE yr:_RE y:_SKE
+    ## year                                                               
+    ## plot_typeLong-term Krat Exclosure                                  
+    ## plot_typeRodent Exclosure                                          
+    ## plot_typeShort-term Krat Exclosure                                 
+    ## plot_typeSpectab exclosure                                         
+    ## year:plot_typeLong-term Krat Exclosure  -0.500                     
+    ## year:plot_typeRodent Exclosure          -0.500  0.500              
+    ## year:plot_typeShort-term Krat Exclosure -0.500  0.500  0.500       
+    ## year:plot_typeSpectab exclosure         -1.000  0.500  0.500  0.500
+    ## 
+    ## Standardized residuals:
+    ##         Min          Q1         Med          Q3         Max 
+    ## -3.17905440 -0.57804698 -0.04042463  0.48212023  3.96854881 
+    ## 
+    ## Residual standard error: 105.597 
+    ## Degrees of freedom: 130 total; 120 residual
 
 Question 5 (Danielle)
 ---------------------

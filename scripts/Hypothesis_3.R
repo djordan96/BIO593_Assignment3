@@ -69,12 +69,24 @@ ggplot(surveys_timeplot,aes(x=year, y=n, color = plot_type))+
                      panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
+install.packages("nlme")
+library(nlme)
+gls?
+
+glstime <- gls(n ~ year*plot_type, data = surveys_timeplot)
+plot(glstime)
+summary(glstime)
+
 tbl2 = table(surveys$plot_type, surveys$year)
 tbl2
 
-
+summary (tbl2)
+lmtbl2 <- lm(year~plot_type, data = surveys_timeplot)
+summary(lmtbl2)
+plot(lmtbl2)
 
 
 chisqsp2 <- chisq.test(tbl2)
 round(chisqsp2$residuals, 3)
 corrplot(chisqsp2$residuals, is.corr=FALSE)
+
